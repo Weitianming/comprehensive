@@ -23,4 +23,13 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:23.3.0'
+    compile files('src/main/libs/alicloud-android-push-sdk-2.0.11.jar')
+    compile files('src/main/libs/alicloud-android-session-sdk-2.0.11.jar')
+    compile files('src/main/libs/alisdk-kernel-1.8.1.jar')
+    compile files('src/main/libs/alisdk-ut-5.jar')
+    compile files('src/main/libs/utdid4all-1.0.4.jar')
+    compile 'com.android.support:support-v4:24.0.0-alpha1'
+    compile files('src/main/libs/commons-logging-1.1.1.jar')
+    compile files('src/main/libs/httpclient-4.1.2.jar')
+    compile files('src/main/libs/httpcore-4.0.jar')
 }

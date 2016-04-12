@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <TextView
+        android:id="@+id/layout"
+        android:layout_width="fill_parent"
+        android:layout_height="25dp"
+        android:background="#00abec" />
+
+    <RelativeLayout
+        android:id="@+id/view2_Relative"
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_below="@+id/layout"
+        android:background="#00abec" >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/Dynamic"
+            android:textColor="#fff"
+            android:textSize="20dp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:background="@android:color/transparent"
+            android:text="@string/Administration"
+            android:textColor="#fff"
+            android:textSize="16dp" />
+    </RelativeLayout>
+
+    <com.example.view.ReboundScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_below="@+id/view2_Relative" >
+
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:ems="1"
+                android:text="动态界面"
+                android:textSize="30dp" />
+        </RelativeLayout>
+    </com.example.view.ReboundScrollView>
+
+</RelativeLayout>
