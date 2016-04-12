@@ -1,14 +1,5 @@
 package com.example.main.login;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.example.database.ChatDataBase;
-import com.example.login.R;
-import com.example.server.JSONHttpUtil;
-import com.example.util.ChatAdapter;
-import com.example.util.SwapMessage;
-
 import android.app.Activity;
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -24,6 +15,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.main.login.database.ChatDataBase;
+import com.example.main.login.server.JSONHttpUtil;
+import com.example.main.login.util.ChatAdapter;
+import com.example.main.login.util.SwapMessage;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class ChatActivity extends Activity {
 	public static String name;
@@ -45,14 +44,14 @@ public class ChatActivity extends Activity {
 		name = getIntent().getStringExtra("name");
 		swapMessages = new ArrayList<SwapMessage>();
 
-		// �޸����������
+		// 修改软键盘设置
 		getWindow().setSoftInputMode(
 				WindowManager.LayoutParams.SOFT_INPUT_MASK_ADJUST
 						| WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
 		initView();
 	}
 
-	// ��ʼ���ؼ�
+	// 初始化控件
 	private void initView() {
 		chatShow = (TextView) findViewById(R.id.chat_show);
 		chatList = (ListView) findViewById(R.id.chat_list);
@@ -65,7 +64,7 @@ public class ChatActivity extends Activity {
 		new ChatRecord().start();
 	}
 
-	// ���Ͱ�ť�¼�����
+	// 发送按钮事件监听
 	private class SendClickListener implements OnClickListener {
 
 		@Override
@@ -82,16 +81,16 @@ public class ChatActivity extends Activity {
 							MainActivity.name, name, chatText.getText()
 									.toString());
 
-					if (string.equals("Ok")) { // ���ͳɹ�
+					if (string.equals("Ok")) { // 发送成功
 						ChatDataBasePreservation(chatText
-								.getText().toString());// ���淢�ͳɹ�����������
+								.getText().toString()); // 保存发送成功的聊天内容
 						swapMessage.setSender(MainActivity.name);
 						swapMessage.setContent(chatText.getText().toString());
 						swapMessages.add(swapMessage);
 						chatAdapter.setData(swapMessages);
 						msg.what = 2;
 						handler.sendMessage(msg);
-					} else { // ����ʧ��
+					} else { // 发送失败
 						msg.what = 3;
 						handler.sendMessage(msg);
 					}
@@ -100,8 +99,8 @@ public class ChatActivity extends Activity {
 			}).start();
 		}
 	}
-	
-	// ��ȡ�����¼���߳�
+
+	// 读取聊天记录的线程
 	private class ChatRecord extends Thread {
 		
 		@Override
@@ -110,13 +109,13 @@ public class ChatActivity extends Activity {
 				msg = new Message();
 			}
 			msg.what = 1;
-			ChatDataBaseHandle(); // ��ȡ���ڱ��ص������¼
+			ChatDataBaseHandle(); // 读取存在本地的聊天记录
 			chatAdapter.setData(swapMessages);
 			
 			for (int i = 0; i < swapMessages.size(); i++) {
 				
-				Log.d("������", swapMessages.get(i).getSender());
-				Log.d("����", swapMessages.get(i).getContent());
+				Log.d("发送者", swapMessages.get(i).getSender());
+				Log.d("内容", swapMessages.get(i).getContent());
 				
 			}
 			
@@ -128,22 +127,22 @@ public class ChatActivity extends Activity {
 	public static Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case 1: // ���������¼��ʾ
+			case 1: // 本地聊天记录显示
 				chatList.setAdapter(chatAdapter);
 				chatList.setSelection(chatAdapter.getCount());
 				break;
 			
-			case 2: // ���ͳɹ�
+			case 2: // 发送成功
 				chatAdapter.notifyDataSetChanged();
 				chatList.setSelection(chatAdapter.getCount());
 				chatText.setText("");
 				break;
 				
-			case 3: // ����ʧ��
+			case 3: // 发送失败
 				
 				break;
 				
-			case 4: // ������Ϣ
+			case 4: // 接收信息
 				chatAdapter.notifyDataSetChanged();
 				chatList.setSelection(chatAdapter.getCount());
 				break;
@@ -154,8 +153,8 @@ public class ChatActivity extends Activity {
 
 		}
 	};
-	
-	// ������ݿ⴦��
+
+	// 本地数据库处理
 	private void ChatDataBaseHandle() {
 		db = new ChatDataBase(ChatActivity.this, name).getReadableDatabase();
 		ChatCursor = db.query("r"+name, null, null, null, null, null, null);
@@ -168,7 +167,7 @@ public class ChatActivity extends Activity {
 		}
 	}
 
-	// �����ͳɹ����������ݱ�����������ݿ�
+	// 将发送成功的聊天内容保存至本地数据库
 	private void ChatDataBasePreservation(String content) {
 		ContentValues values = new ContentValues();
 		values.put("id", MainActivity.name);

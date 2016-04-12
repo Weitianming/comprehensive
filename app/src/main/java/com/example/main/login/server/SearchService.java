@@ -1,21 +1,18 @@
 package com.example.main.login.server;
 
+import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+import android.util.Log;
+
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.example.main.MainActivity;
-
-import android.app.Service;
-import android.content.Intent;
-import android.os.IBinder;
-import android.util.Log;
 
 public class SearchService extends Service {
 	String IP = "http://yukiy.sinaapp.com/ChatServer";
@@ -48,7 +45,7 @@ public class SearchService extends Service {
 //				in = new DataInputStream(socket.getInputStream());
 				reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), "UTF-8"));
 				
-//				Log.e("���͵���Ϣasd", MainActivity.name);
+//				Log.e("发送的消息asd", MainActivity.name);
 //				jsonObject.put("sender", MainActivity.name);
 //				String string = jsonObject.toString();
 				
@@ -59,22 +56,22 @@ public class SearchService extends Service {
 //			} catch (JSONException e) {
 //				e.printStackTrace();
 			}
-			Log.e("���͵���Ϣ", jsonObject.toString());
-			String string = "δ�յ���Ϣ";
+			Log.e("发送的消息", jsonObject.toString());
+			String string = "未收到消息";
 			while (true) {
 
 				try {
 					Thread.sleep(1000);
-					Log.e("����", "1111111111111");
+					Log.e("接收", "1111111111111");
 					string = reader.readLine();
-					Log.e("����", string);
+					Log.e("接收", string);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
 
-				Log.e("���ն�", string);
+				Log.e("接收端", string);
 			}
 
 		}

@@ -1,8 +1,5 @@
 package com.example.main.login.view;
 
-import com.example.login.R;
-import com.nineoldandroids.view.ViewHelper;
-
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.PorterDuff.Mode;
@@ -17,6 +14,9 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+
+import com.example.main.login.R;
+import com.nineoldandroids.view.ViewHelper;
 
 public class DragLayout extends FrameLayout {
 
@@ -61,7 +61,7 @@ public class DragLayout extends FrameLayout {
 
 	private ViewDragHelper.Callback dragHelperCallback = new ViewDragHelper.Callback() {
 
-		// ˮƽλ�÷�Χ
+		// 水平位置范围
 		@Override
 		public int clampViewPositionHorizontal(View child, int left, int dx) {
 
@@ -75,19 +75,19 @@ public class DragLayout extends FrameLayout {
 
 		}
 
-		// �����϶���View
+		// 可以拖动的View
 		@Override
 		public boolean tryCaptureView(View child, int pointerId) {
 			return true;
 		}
 
-		// ˮƽ�϶��ķ�Χ
+		// 水平拖动的范围
 		@Override
 		public int getViewHorizontalDragRange(View child) {
 			return width;
 		}
 
-		// �ͷ�ʱλ��
+		// 释放时位置
 		@Override
 		public void onViewReleased(View releasedChild, float xvel, float yvel) {
 			super.onViewReleased(releasedChild, xvel, yvel);
@@ -106,7 +106,7 @@ public class DragLayout extends FrameLayout {
 
 		}
 
-		// Viewλ�ñ仯
+		// View位置变化
 
 		@Override
 		public void onViewPositionChanged(View changedView, int left, int top,
@@ -203,7 +203,7 @@ public class DragLayout extends FrameLayout {
 		return false;
 	}
 
-	// �����϶��¼�
+	// 发生拖动事件
 	private void dispatchDragEvent(int mainLeft) {
 		if (dragListener == null) {
 			return;
@@ -219,7 +219,7 @@ public class DragLayout extends FrameLayout {
 		}
 	}
 
-	// ����λ��
+	// 滑动位置
 	private void animateView(float percent) {
 		float f1 = 1 - percent * 0.2f;
 		ViewHelper.setScaleX(vg_main, f1);
@@ -238,7 +238,7 @@ public class DragLayout extends FrameLayout {
 				Mode.SRC_OVER);
 	}
 
-	// ��Ӱɫ
+	// 阴影色
 	private Integer evaluate(float fraction, Object startValue, Integer endValue) {
 		int startInt = (Integer) startValue;
 		int startA = (startInt >> 24) & 0xff;

@@ -1,18 +1,18 @@
 package com.example.main.login.server;
 
+import android.content.Context;
+
+import com.example.main.login.MainActivity;
+import com.example.main.login.util.ChatHandle;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.example.main.MainActivity;
-import com.example.util.ChatHandle;
-
-import android.content.Context;
 
 public class ChatService extends Thread {
 	private String IP = "114.215.95.214";
@@ -34,9 +34,9 @@ public class ChatService extends Thread {
 		jsonObject = new JSONObject();
 
 		try {
-			socket = new Socket(IP, Port); // ���ӷ�����
-			
-			// ���͸��˺ŵ�ID��Ϣ
+			socket = new Socket(IP, Port); // 连接服务器
+
+			// 发送该账号的ID信息
 			jsonObject.put("sender", MainActivity.name);
 			String string = jsonObject.toString();
 			

@@ -48,13 +48,12 @@ public class MainView1 extends Fragment {
 			Bundle savedInstanceState) {
 		rootView = inflater.inflate(R.layout.main_view1, container, false);
 
-		initTitleView(); // �Ϸ��˵�
-		initDragLayout(); // �����򿪻�������
+		initTitleView(); // 上方菜单
+		initDragLayout(); // 单击打开滑动界面
 		
-		initView(); // ��ʼ���ؼ�
-		getAllUsersName(); // ��ȡ���˺ŵ����к���
+		initView(); // 初始化控件
+		getAllUsersName(); // 获取该账号的所有好友
 		
-
 		return rootView;
 	}
 
@@ -104,20 +103,20 @@ public class MainView1 extends Fragment {
 		});
 	}
 
-	// �����򿪻�������
+	// 单击打开滑动界面
 	private void initDragLayout() {
 		view1_title_picure = (ImageView) rootView
 				.findViewById(R.id.view1_title_picure);
 		view1_title_button = (ImageButton) rootView
 				.findViewById(R.id.view1_title_button);
 
-		// ������ͷ��
+		// 标题栏头像
 		Bitmap Resources = BitmapFactory.decodeResource(getResources(),
 				R.drawable.p6_1);
 		Bitmap bitmap = new BitmapCircular().setCircular(Resources, 200.0f);
 		view1_title_picure.setImageBitmap(bitmap);
 
-		// ���
+		// 左侧
 		view1_title_picure.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -125,7 +124,7 @@ public class MainView1 extends Fragment {
 				mBtnCallListener.trans();
 			}
 		});
-		// �Ҳ�
+		// 右侧
 		view1_title_button.setOnClickListener(new OnClickListener() {
 
 			@Override
@@ -134,7 +133,7 @@ public class MainView1 extends Fragment {
 		});
 	}
 
-	// ʵ��ӿ�
+	// 实例化接口
 	@Override
 	public void onAttach(Activity activity) {
 
@@ -145,14 +144,14 @@ public class MainView1 extends Fragment {
 
 		super.onAttach(activity);
 	}
-	
-	// ��ʼ���ؼ�
+
+	// 初始化控件
 	public void initView() {
 		listView = (ListView) rootView.findViewById(R.id.view1_list);
 		listView.setOnItemClickListener(new ListItemClickListener());
 	}
-	
-	// ���������
+
+	// 打开聊天界面
 	class ListItemClickListener implements OnItemClickListener {
 
 		@Override
@@ -165,10 +164,10 @@ public class MainView1 extends Fragment {
 		}
 		
 	}
-	
-	
-	
-	// �����б�
+
+
+
+	// 好友列表
 	private class MyAdapter extends BaseAdapter {
 
 		@Override
@@ -198,14 +197,14 @@ public class MainView1 extends Fragment {
 		}
 		
 	}
-	
-	/**  
-     * ���¼���ListView�ĸ߶ȣ����ScrollView��ListView����View���й�����Ч����Ƕ��ʹ��ʱ���ͻ������  
-     * @param listView  
-     */  
-    public void setListViewHeight(ListView listView) {    
-            
-        // ��ȡListView��Ӧ��Adapter    
+
+	/**
+	 * 重新计算ListView的高度，解决ScrollView和ListView两个View都有滚动的效果，在嵌套使用时起冲突的问题
+	 * @param listView
+	 */
+	public void setListViewHeight(ListView listView) {
+
+		// 获取ListView对应的Adapter
         
         ListAdapter listAdapter = listView.getAdapter();    
         
@@ -213,19 +212,18 @@ public class MainView1 extends Fragment {
             return;    
         }    
         int totalHeight = 0;    
-        for (int i = 0, len = listAdapter.getCount(); i < len; i++) { // listAdapter.getCount()������������Ŀ    
+        for (int i = 0, len = listAdapter.getCount(); i < len; i++) { // listAdapter.getCount()返回数据项的数目
             View listItem = listAdapter.getView(i, null, listView);    
-            listItem.measure(0, 0); // ��������View �Ŀ��    
-            totalHeight += listItem.getMeasuredHeight(); // ͳ������������ܸ߶�    
+            listItem.measure(0, 0); // 计算子项View 的宽高
+            totalHeight += listItem.getMeasuredHeight(); // 统计所有子项的总高度
         }    
         
         ViewGroup.LayoutParams params = listView.getLayoutParams();    
         params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));    
         listView.setLayoutParams(params);    
-    }    
-	
-	
-	// ��ȡ���˺��µ����к���
+    }
+
+	// 获取该账号下的所有好友
 	private void getAllUsersName() {
 		new Thread(new Runnable() {
 			
@@ -247,11 +245,11 @@ public class MainView1 extends Fragment {
 		}).start();
 		
 	}
-	
-	
-	// ��������֪ͨ
-	
-	// ���պ��ѷ��͵���Ϣ
+
+
+	// 发生上线通知
+
+	// 接收好友发送的消息
 	
 	
 	

@@ -1,16 +1,16 @@
 package com.example.main.login.util;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import com.example.database.ChatDataBase;
-import com.example.main.ChatActivity;
-
 import android.app.ActivityManager;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Message;
+
+import com.example.main.login.ChatActivity;
+import com.example.main.login.database.ChatDataBase;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ChatHandle extends Thread {
 	private String strContent = null;
@@ -42,15 +42,15 @@ public class ChatHandle extends Thread {
 				object = new JSONObject(jsonObject.getString("message"));
 				sender = object.getString("sender");
 				content = object.getString("content");
-				ChatRecord(sender, content); // ��������Ϣ�����ڱ�����ݿ�
+				ChatRecord(sender, content); // 将聊天信息保存在本地数据库
 
 				String activityName = getRunningActivityName();
 				if (activityName.equals("com.example.main.MainActivity")) {
-					
-					// ��ǰ��������������
+
+					// 当前窗口在主界面上
 					
 				} else if (activityName.equals("com.example.main.ChatActivity")) {
-					if (ChatActivity.name.equals(sender)) { // ���ǵ�ǰ���������
+					if (ChatActivity.name.equals(sender)) { // 正是当前的聊天好友
 						swapMessage = new SwapMessage();
 						swapMessage.setSender(sender);
 						swapMessage.setContent(content);
@@ -59,15 +59,15 @@ public class ChatHandle extends Thread {
 						Message msg = new Message();
 						msg.what = 4;
 						ChatActivity.handler.sendMessage(msg);
-					} else { // �ǵ�ǰ���������
-						
-						// ���񶯴���
+					} else { // 非当前的聊天好友
+
+						// 做振动处理
 						
 					}
 					
-				} else { // �ǵ�ǰ������
-					
-					// ���񶯡���Ƶ����
+				} else { // 非当前主界面
+
+					// 做振动、音频处理
 					
 				}
 
@@ -78,8 +78,8 @@ public class ChatHandle extends Thread {
 		}
 
 	}
-	
-	// �����յ���������Ϣ��������ݿ���
+
+	// 将接收到的聊天信息保存至数据库中
 	private void ChatRecord(String sender, String content) {
 		db = new ChatDataBase(context, sender).getReadableDatabase();
 		ContentValues values = new ContentValues();
@@ -88,7 +88,7 @@ public class ChatHandle extends Thread {
 		db.insert("r"+sender, null, values);
 	}
 
-	// ��ȡ��ǰ��Activity������
+	// 获取当前的Activity的名字
 	private String getRunningActivityName() {
 		ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
 		String runningActivity = activityManager.getRunningTasks(1).get(0).topActivity

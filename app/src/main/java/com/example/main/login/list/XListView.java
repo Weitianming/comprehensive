@@ -1,55 +1,52 @@
 package com.example.main.login.list;
 
-import com.example.login.R;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.animation.DecelerateInterpolator;
-import android.widget.AbsListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Scroller;
-import android.widget.TextView;
-import android.widget.AbsListView.OnScrollListener;
+
+import com.example.main.login.R;
 
 public class XListView extends ListView {  
 	  
     private final static int SCROLLBACK_HEADER = 0;  
-    private final static int SCROLLBACK_FOOTER = 1;  
-    // ����ʱ��  
-    private final static int SCROLL_DURATION = 400;  
-    // ���ظ��ľ���  
-    private final static int PULL_LOAD_MORE_DELTA = 100;  
-    // ��������  
-    private final static float OFFSET_RADIO = 2f;  
-    // ��¼���µ��y���  
+    private final static int SCROLLBACK_FOOTER = 1;
+    // 滑动时长
+    private final static int SCROLL_DURATION = 400;
+    // 加载更多的距离
+    private final static int PULL_LOAD_MORE_DELTA = 100;
+    // 滑动比例
+    private final static float OFFSET_RADIO = 2f;
+    // 记录按下点的y坐标
     private float lastY;  
     // �����ع�  
     private Scroller scroller;  
     private IXListViewListener mListViewListener;  
     private XListViewHeader headerView;  
-    private RelativeLayout headerViewContent;  
-    // header�ĸ߶�  
-    private int headerHeight;  
-    // �Ƿ��ܹ�ˢ��  
-    private boolean enableRefresh = true;  
-    // �Ƿ�����ˢ��  
-    private boolean isRefreashing = false;  
-    // footer  
-    private XListViewFooter footerView;  
-    // �Ƿ���Լ��ظ��  
-    private boolean enableLoadMore;  
-    // �Ƿ����ڼ���  
-    private boolean isLoadingMore;  
-    // �Ƿ�footer׼��״̬  
+    private RelativeLayout headerViewContent;
+    // 用来回滚
+    private int headerHeight;
+    // header的高度
+    private boolean enableRefresh = true;
+    // 是否能够刷新
+    private boolean isRefreashing = false;
+    // 是否正在刷新
+    private XListViewFooter footerView;
+    // footer
+    private boolean enableLoadMore;
+    // 是否可以加载更多
+    private boolean isLoadingMore;
+    // 是否footer准备状态
     private boolean isFooterAdd = false;  
     // total list items, used to detect is at the bottom of listview.  
-    private int totalItemCount;  
-    // ��¼�Ǵ�header����footer����  
+    private int totalItemCount;
+    // 记录是从header还是footer返回
     private int mScrollBack;  
   
     private static final String TAG = "XListView";  
@@ -77,7 +74,7 @@ public class XListView extends ListView {
         footerView = new XListViewFooter(context);  
   
         headerViewContent = (RelativeLayout) headerView  
-                .findViewById(R.id.xlistview_header_content);  
+                .findViewById(R.id.xlistview_header_content);
         headerView.getViewTreeObserver().addOnGlobalLayoutListener(  
                 new OnGlobalLayoutListener() {  
                     @SuppressWarnings("deprecation")  
@@ -93,8 +90,8 @@ public class XListView extends ListView {
     }  
   
     @Override  
-    public void setAdapter(ListAdapter adapter) {  
-        // ȷ��footer�����Ӳ���ֻ���һ��  
+    public void setAdapter(ListAdapter adapter) {
+        // 确保footer最后添加并且只添加一次
         if (isFooterAdd == false) {  
             isFooterAdd = true;  
             addFooterView(footerView);  
@@ -108,15 +105,15 @@ public class XListView extends ListView {
   
         totalItemCount = getAdapter().getCount();  
         switch (ev.getAction()) {  
-        case MotionEvent.ACTION_DOWN:  
-            // ��¼���µ����  
+        case MotionEvent.ACTION_DOWN:
+            // 记录按下的坐标
             lastY = ev.getRawY();  
             break;  
-        case MotionEvent.ACTION_MOVE:  
-            // �����ƶ�����  
+        case MotionEvent.ACTION_MOVE:
+            // 计算移动距离
             float deltaY = ev.getRawY() - lastY;  
-            lastY = ev.getRawY();  
-            // �ǵ�һ��ұ����Ѿ���ʾ������������  
+            lastY = ev.getRawY();
+            // 是第一项并且标题已经显示或者是在下拉
             if (getFirstVisiblePosition() == 0  
                     && (headerView.getVisiableHeight() > 0 || deltaY > 0)) {  
                 updateHeaderHeight(deltaY / OFFSET_RADIO);  
@@ -151,9 +148,9 @@ public class XListView extends ListView {
     }  
   
     @Override  
-    public void computeScroll() {  
-  
-        // ����֮�����  
+    public void computeScroll() {
+
+        // 松手之后调用
         if (scroller.computeScrollOffset()) {  
   
             if (mScrollBack == SCROLLBACK_HEADER) {  
@@ -211,8 +208,8 @@ public class XListView extends ListView {
   
     private void updateHeaderHeight(float delta) {  
         headerView.setVisiableHeight((int) delta  
-                + headerView.getVisiableHeight());  
-        // δ����ˢ��״̬�����¼�ͷ  
+                + headerView.getVisiableHeight());
+        // 未处于刷新状态，更新箭头
         if (enableRefresh && !isRefreashing) {  
             if (headerView.getVisiableHeight() > headerHeight) {  
                 headerView.setState(XListViewHeader.STATE_READY);  
@@ -223,24 +220,24 @@ public class XListView extends ListView {
   
     }  
   
-    private void resetHeaderHeight() {  
-        // ��ǰ�Ŀɼ�߶�  
-        int height = headerView.getVisiableHeight();  
-        // �������ˢ�²��Ҹ߶�û����ȫչʾ  
+    private void resetHeaderHeight() {
+        // 当前的可见高度
+        int height = headerView.getVisiableHeight();
+        // 如果正在刷新并且高度没有完全展示
         if ((isRefreashing && height <= headerHeight) || (height == 0)) {  
             return;  
-        }  
-        // Ĭ�ϻ�ع���header��λ��  
-        int finalHeight = 0;  
-        // ���������ˢ��״̬����ع���header�ĸ߶�  
+        }
+        // 默认会回滚到header的位置
+        int finalHeight = 0;
+        // 如果是正在刷新状态，则回滚到header的高度
         if (isRefreashing && height > headerHeight) {  
             finalHeight = headerHeight;  
         }  
-        mScrollBack = SCROLLBACK_HEADER;  
-        // �ع���ָ��λ��  
+        mScrollBack = SCROLLBACK_HEADER;
+        // 回滚到指定位置
         scroller.startScroll(0, height, 0, finalHeight - height,  
-                SCROLL_DURATION);  
-        // ����computeScroll  
+                SCROLL_DURATION);
+        // 触发computeScroll
         invalidate();  
     }  
   

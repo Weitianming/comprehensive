@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/left_layout"
@@ -16,20 +16,20 @@
         android:paddingLeft="10dip"
         android:paddingRight="5dip"
         android:paddingTop="5dip"
-        android:visibility="gone" >
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/editText_he_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignLeft="@+id/editText_he_name"
-            android:layout_below="@+id/editText_he_name"
             android:layout_marginTop="5dip"
             android:background="#00000000"
             android:gravity="top"
             android:textColor="#111111"
             android:textSize="18sp" />
     </RelativeLayout>
+    <!--android:layout_alignLeft="@+id/editText_he_name"-->
+    <!--android:layout_below="@+id/editText_he_name"-->
 
     <RelativeLayout
         android:id="@+id/right_layout"
@@ -44,7 +44,7 @@
         android:paddingBottom="5dip"
         android:paddingLeft="5dip"
         android:paddingRight="10dip"
-        android:paddingTop="5dip" >
+        android:paddingTop="5dip">
 
         <TextView
             android:id="@+id/editText_me_content"

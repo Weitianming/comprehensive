@@ -1,7 +1,6 @@
 package com.example.main.login.server;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
+import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -12,7 +11,8 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.util.Log;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 public class JSONHttpUtil {
 	private String Response = "";
@@ -21,13 +21,13 @@ public class JSONHttpUtil {
 	public static String urlStr = "http://114.215.95.214/MyServersText/HelloWorld";
 
 	/**
-	 * ����
-	 * @param jsonObject ��Ҫ���͵�Json���
-	 * @return ������Json���
+	 * 发送
+	 * @param jsonObject 需要发送的Json数据
+	 * @return 反馈的Json数据
 	 */
 	private JSONObject send(JSONObject jsonObject) {
 		JSONObject object = new JSONObject();
-		// Post����
+		// Post请求
 		HttpPost post = new HttpPost(urlStr);
 
 		StringEntity se;
@@ -42,9 +42,9 @@ public class JSONHttpUtil {
 			if (httpResponse.getStatusLine().getStatusCode() == 200) {
 				String string = EntityUtils.toString(httpResponse.getEntity());
 				object = new JSONObject(string);
-				Log.e("���ͳɹ�", string);
+				Log.e("发送成功", string);
 			} else {
-				Log.e("httpResponse", "����ʧ��");
+				Log.e("httpResponse", "连接失败");
 			}
 
 		} catch (UnsupportedEncodingException e) {
@@ -61,10 +61,10 @@ public class JSONHttpUtil {
 	}
 
 	/**
-	 * ��¼����
-	 * @param userName �û���
-	 * @param userPwd ����
-	 * @return ����String
+	 * 登录请求
+	 * @param userName 用户名
+	 * @param userPwd 密码
+	 * @return 返回String
 	 */
 	public String doLogin(String userName, String userPwd) {
 		JSONObject object = new JSONObject();
@@ -86,10 +86,10 @@ public class JSONHttpUtil {
 	}
 
 	/**
-	 * ע������
-	 * @param userName �û���
-	 * @param userPwd ����
-	 * @return ����String
+	 * 注册请求
+	 * @param userName 用户名
+	 * @param userPwd 密码
+	 * @return 返回String
 	 */
 	public String doRegister(String userName, String userPwd) {
 		JSONObject object = new JSONObject();
@@ -111,9 +111,9 @@ public class JSONHttpUtil {
 	}
 
 	/**
-	 * ��ȡ������Ϣ
-	 * @param sender ��Ҫ��ȡ���ѵ��˺�
-	 * @return ����String
+	 * 获取好友信息
+	 * @param sender 需要获取好友的账号
+	 * @return 返回String
 	 */
 	public String getUsersName(String sender) {
 		JSONObject object = new JSONObject();
@@ -137,11 +137,11 @@ public class JSONHttpUtil {
 	}
 
 	/**
-	 * ������Ϣ
-	 * @param sender ���ͷ�
-	 * @param receiver ���շ�
-	 * @param notice ��Ϣ����
-	 * @return ����String
+	 * 发送消息
+	 * @param sender 发送方
+	 * @param receiver 接收方
+	 * @param notice 消息内容
+	 * @return 返回String
 	 */
 	public String SendNotice(String sender, String receiver,
 			String notice) {

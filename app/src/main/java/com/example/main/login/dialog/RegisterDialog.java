@@ -84,19 +84,19 @@ public class RegisterDialog extends Dialog {
 								dismiss();
 							} else if (Response.equals("NO")) {
 								msg.what = 1;
-								msg.obj = "�˺��Ѵ���";
+								msg.obj = "账号已存在";
 								Registerhandler.sendMessage(msg);
 							}
 
 						} else {
 							msg.what = 2;
-							msg.obj = "������������벻ͬ";
+							msg.obj = "两次输入的密码不同";
 							Registerhandler.sendMessage(msg);
 						}
 
 					} else {
 						msg.what = 3;
-						msg.obj = "�˺Ż����벻��Ϊ��";
+						msg.obj = "账号或密码不能为空";
 						Registerhandler.sendMessage(msg);
 					}
 				}
@@ -116,13 +116,13 @@ public class RegisterDialog extends Dialog {
 	Handler Registerhandler = new Handler() {
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
-			case 1: // �˺��Ѵ���
+			case 1: // 账号已存在
 				RegisterNumber.setText("");
 				RegisterPassword.setText("");
 				ConfirmPassword.setText("");
 				break;
 				
-			case 2: // ������������벻ͬ
+			case 2: // 两次输入的密码不同
 				ConfirmPassword.setText("");
 				break;
 				

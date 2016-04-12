@@ -1,7 +1,5 @@
 package com.example.main.login.list;
 
-import com.example.login.R;
-
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -9,13 +7,15 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class XListViewFooter extends LinearLayout {  
-	  
-    // ��״̬  
-    public final static int STATE_NORMAL = 0;  
-    // ׼��״̬  
-    public final static int STATE_READY = 1;  
-    // ����״̬  
+import com.example.main.login.R;
+
+public class XListViewFooter extends LinearLayout {
+
+    // 正常状态
+    public final static int STATE_NORMAL = 0;
+    // 准备状态
+    public final static int STATE_READY = 1;
+    // 加载状态
     public final static int STATE_LOADING = 2;  
   
     private View mContentView;  
@@ -35,7 +35,7 @@ public class XListViewFooter extends LinearLayout {
     private void initView(Context context) {  
   
         LinearLayout moreView = (LinearLayout) LayoutInflater.from(context)  
-                .inflate(R.layout.xlistview_footer, null);  
+                .inflate(R.layout.xlistview_footer, null);
         addView(moreView);  
         moreView.setLayoutParams(new LayoutParams(
                 LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));  
@@ -44,13 +44,13 @@ public class XListViewFooter extends LinearLayout {
         mProgressBar = moreView.findViewById(R.id.xlistview_footer_progressbar);  
         mHintView = (TextView) moreView  
                 .findViewById(R.id.xlistview_footer_hint_textview);  
-    }  
-  
-    /** 
-     * ���õ�ǰ��״̬ 
-     *  
-     * @param state 
-     */  
+    }
+
+    /**
+     * 设置当前的状态
+     *
+     * @param state
+     */
     public void setState(int state) {  
   
         mProgressBar.setVisibility(View.INVISIBLE);  

@@ -1,13 +1,5 @@
 package com.example.main.login;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import com.example.fragment.View1;
-import com.example.fragment.View2;
-import com.example.fragment.View3;
-import com.example.login.R;
-
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,6 +8,13 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+
+import com.example.main.login.fragment.View1;
+import com.example.main.login.fragment.View2;
+import com.example.main.login.fragment.View3;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class InitActivity extends FragmentActivity {
 	private List<Fragment> fragments;
@@ -30,11 +29,11 @@ public class InitActivity extends FragmentActivity {
 		
 		sp = getSharedPreferences("info", MODE_PRIVATE);
 		
-		if (sp.getBoolean("Automatic", false)) { // �Զ���¼
+		if (sp.getBoolean("Automatic", false)) { // 自动登录
 			startActivity(new Intent(InitActivity.this, MainActivity.class));
-		} else if (sp.getBoolean("init", false)) { // �����Զ���¼
+		} else if (sp.getBoolean("init", false)) { // 不可自动登录
 			startActivity(new Intent(InitActivity.this, LoginActivity.class));
-		} else { // ��һ�δ����
+		} else { // 第一次打开软件
 			initview();
 		}
 		

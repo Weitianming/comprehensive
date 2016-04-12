@@ -10,16 +10,16 @@ import android.graphics.Bitmap.Config;
 import android.graphics.PorterDuff.Mode;
 
 /**
- * ͷ��Բ�δ���
- * @author α����
+ * 头像圆形处理
+ * @author 伪天明
  */
 public class BitmapCircular {
-	
+
 	/**
-	 * ����ͼƬΪԲ��
-	 * @param bitmap Ҫ�����ͼƬ
-	 * @param pixels ����������
-	 * @return ���ش�����ͼƬ
+	 * 设置图片为圆形
+	 * @param bitmap 要处理的图片
+	 * @param pixels 处理后的像素
+	 * @return 返回处理后的图片
 	 */
 	public Bitmap setCircular(Bitmap bitmap, float pixels) {
 		Bitmap output = Bitmap.createBitmap(bitmap.getWidth(),

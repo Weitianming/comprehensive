@@ -21,30 +21,30 @@ import com.example.main.login.R;
 
 public class XListViewHeader extends LinearLayout {
 
-	private static final String HINT_NORMAL = "����ˢ��";
-	private static final String HINT_READY = "�ɿ�ˢ�����";
-	private static final String HINT_LOADING = "���ڼ���...";
+	private static final String HINT_NORMAL = "下拉刷新";
+	private static final String HINT_READY = "松开刷新数据";
+	private static final String HINT_LOADING = "正在加载...";
 
-	// ��״̬
+	// 正常状态
 	public final static int STATE_NORMAL = 0;
-	// ׼��ˢ��״̬��Ҳ���Ǽ�ͷ������ı�֮���״̬
+	// 准备刷新状态，也就是箭头方向发生改变之后的状态
 	public final static int STATE_READY = 1;
-	// ˢ��״̬����ͷ�����progressBar
+	// 刷新状态，箭头变成了progressBar
 	public final static int STATE_REFRESHING = 2;
-	// ����������Ҳ���Ǹ��
+	// 布局容器，也就是根布局
 	private LinearLayout container;
-	// ��ͷͼƬ
+	// 箭头图片
 	private ImageView mArrowImageView;
-	// ˢ��״̬��ʾ
+	// 刷新状态显示
 	private ProgressBar mProgressBar;
-	// ˵���ı�
+	// 说明文本
 	private TextView mHintTextView;
-	// ��¼��ǰ��״̬
+	// 记录当前的状态
 	private int mState;
-	// ���ڸı��ͷ�ķ���Ķ���
+	// 用于改变箭头的方向的动画
 	private Animation mRotateUpAnim;
 	private Animation mRotateDownAnim;
-	// ��������ʱ��
+	// 动画持续时间
 	private final int ROTATE_ANIM_DURATION = 180;
 
 	public XListViewHeader(Context context) {
@@ -59,17 +59,17 @@ public class XListViewHeader extends LinearLayout {
 
 	private void initView(Context context) {
 		mState = STATE_NORMAL;
-		// ��ʼ����£���������ˢ��view�߶�Ϊ0
+		// 初始情况下，设置下拉刷新view高度为0
 		LayoutParams lp = new LayoutParams(
 				LayoutParams.MATCH_PARENT, 0);
 		container = (LinearLayout) LayoutInflater.from(context).inflate(
 				R.layout.xlistview_header, null);
 		addView(container, lp);
-		// ��ʼ���ؼ�
+		// 初始化控件
 		mArrowImageView = (ImageView) findViewById(R.id.xlistview_header_arrow);
 		mHintTextView = (TextView) findViewById(R.id.xlistview_header_hint_textview);
 		mProgressBar = (ProgressBar) findViewById(R.id.xlistview_header_progressbar);
-		// ��ʼ������
+		// 初始化动画
 		mRotateUpAnim = new RotateAnimation(0.0f, -180.0f,
 				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
 				0.5f);
@@ -82,18 +82,18 @@ public class XListViewHeader extends LinearLayout {
 		mRotateDownAnim.setFillAfter(true);
 	}
 
-	// ����header��״̬
+	// 设置header的状态
 	public void setState(int state) {
 		if (state == mState)
 			return;
 
-		// ��ʾ���
+		// 显示进度
 		if (state == STATE_REFRESHING) {
 			mArrowImageView.clearAnimation();
 			mArrowImageView.setVisibility(View.INVISIBLE);
 			mProgressBar.setVisibility(View.VISIBLE);
 		} else {
-			// ��ʾ��ͷ
+			// 显示箭头
 			mArrowImageView.setVisibility(View.VISIBLE);
 			mProgressBar.setVisibility(View.INVISIBLE);
 		}
